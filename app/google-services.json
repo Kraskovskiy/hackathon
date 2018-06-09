@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "1080054453082",
+    "firebase_url": "https://da-vinci-d0dae.firebaseio.com",
+    "project_id": "da-vinci-d0dae",
+    "storage_bucket": "da-vinci-d0dae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080054453082:android:b01da28a3ecc486a",
+        "android_client_info": {
+          "package_name": "com.hackathon.a3davinci"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080054453082-c8s2n0upluju1vpnl5farbmd86f04qkf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hackathon.a3davinci",
+            "certificate_hash": "7e8e45473d313ac68723eccad7e0774bc8aebe1b"
+          }
+        },
+        {
+          "client_id": "1080054453082-c8nb18tb77mn3ol7shen499j7nq89ukc.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1080054453082-c8nb18tb77mn3ol7shen499j7nq89ukc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArk9a6_t2h2_Wu0YoAMqzsMjizWM1YwLA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080054453082-c8nb18tb77mn3ol7shen499j7nq89ukc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
