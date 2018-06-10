@@ -8,6 +8,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.hackathon.a3davinci.firebase.DaFirebase
+import com.hackathon.a3davinci.model.Game
+import com.hackathon.a3davinci.model.User
 
 class MatchmakingFragment : Fragment() {
 
@@ -44,6 +47,28 @@ class MatchmakingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val isHost = this.arguments?.getBoolean(ARG_MATCHMAKING_ISHOST)
         initView(isHost)
+        startConnectButton?.setOnClickListener({
+            val firebase = DaFirebase()
+            when(isHost) {
+                true -> {
+                    val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID())
+                    val game = Game(mutableListOf(user))
+                    firebase.createGame(game)
+                    firebase.createUser(user)
+//            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment
+//                    .newInstance(true))?.addToBackStack(null)?.commit()
+                }
+
+                false -> {
+                    val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID())
+                    firebase.createUser(user)
+                    firebase.addPlayer(enterCodeEditText?.text.toString(), user.uuid)
+//            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment
+//                    .newInstance(true))?.addToBackStack(null)?.commit()
+                }
+            }
+
+        })
     }
 
     private fun initView(isHost: Boolean?) {

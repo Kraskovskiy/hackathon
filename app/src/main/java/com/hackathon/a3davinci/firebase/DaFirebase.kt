@@ -20,15 +20,18 @@ class DaFirebase {
 
 
     fun createUser(user: User) {
-        val key = usersRef.push().key
-        user.uuid = key!!
-        usersRef.child(key).setValue(user)
+        usersRef.child(user.uuid).setValue(user)
+    }
+
+    fun generateUserUUID(): String {
+        return usersRef.push().key!!
     }
 
     fun createGame(game: Game) {
         val key = gamesRef.push().key
         game.uuid = key!!
         gamesRef.child(key).setValue(game)
+
     }
 
     fun addPlayer(gameId: String, userId: String) {
