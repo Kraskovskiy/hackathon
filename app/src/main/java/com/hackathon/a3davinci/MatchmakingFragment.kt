@@ -11,7 +11,7 @@ import android.widget.TextView
 
 class MatchmakingFragment : Fragment() {
 
-    private var playerCounterTextView : TextView? = null
+    private var playerCounterTextView: TextView? = null
     private var joinCodeTextView: TextView? = null
     private var enterCodeEditText: EditText? = null
     private var enterNameEditText: EditText? = null
@@ -30,7 +30,7 @@ class MatchmakingFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       val view: View = inflater.inflate(R.layout.fragment_matchmaking, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_matchmaking, container, false)
 
         playerCounterTextView = view?.findViewById(R.id.player_counter)
         joinCodeTextView = view?.findViewById(R.id.join_code)
@@ -38,36 +38,29 @@ class MatchmakingFragment : Fragment() {
         enterNameEditText = view?.findViewById(R.id.enter_name)
         startConnectButton = view?.findViewById(R.id.button_start_connect_game)
 
-
         return view
-
-        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val isHost = this.arguments?.getBoolean(ARG_MATCHMAKING_ISHOST)
         initView(isHost)
     }
 
+    private fun initView(isHost: Boolean?) {
+        when (isHost) {
+            true -> {
+                enterCodeEditText?.visibility = View.GONE
+                joinCodeTextView?.visibility = View.VISIBLE
+                startConnectButton?.text = getText(R.string.start_game)
+            }
 
-
-       private  fun initView(isHost : Boolean?)  {
-            when(isHost) {
-                true -> {
-                    enterCodeEditText?.visibility = View.GONE
-                    joinCodeTextView?.visibility = View.VISIBLE
-                    startConnectButton?.text = getText(R.string.start_game)
-                }
-
-                false -> {
-                    enterCodeEditText?.visibility = View.VISIBLE
-                    joinCodeTextView?.visibility = View.GONE
-                    startConnectButton?.text = getText(R.string.connect)
-                }
+            false -> {
+                enterCodeEditText?.visibility = View.VISIBLE
+                joinCodeTextView?.visibility = View.GONE
+                startConnectButton?.text = getText(R.string.connect)
+            }
         }
 
     }
-
-
-
 
 }
