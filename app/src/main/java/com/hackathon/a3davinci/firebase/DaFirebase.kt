@@ -90,6 +90,7 @@ class DaFirebase {
         var gameListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val game = dataSnapshot.getValue<Game>(Game::class.java!!)
+                Log.i("GAME", "$game")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
