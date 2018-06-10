@@ -1,10 +1,12 @@
 package com.hackathon.a3davinci
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.hackathon.a3davinci.firebase.DaFirebase
+import com.hackathon.a3davinci.model.Game
+import com.hackathon.a3davinci.model.User
 
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,8 +18,14 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
+            val firebase = DaFirebase()
+            val user = User("Stas")
+            val game = Game(mutableListOf(user))
+            firebase.createUser(user)
+            firebase.createGame(game)
+            firebase.addPlayer("-LEexkuRt7GfpuCy7CGV", "-LEe_Y487_VprP-Taszk")
         }
     }
 
