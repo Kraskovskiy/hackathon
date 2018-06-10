@@ -72,5 +72,5 @@ fun sendPoints(points: List<Pair<Float, Float>>) {
 fun retrievePoints(p: String): List<Pair<Float, Float>> {
     val points: List<Float> = Gson()
             .fromJson(p, object : TypeToken<List<Float>>() {}.type)
-    return points.chunked(2).map { it[1] to it[2] }
+    return points.chunked(2).map { it[0] to it[1] }
 }
