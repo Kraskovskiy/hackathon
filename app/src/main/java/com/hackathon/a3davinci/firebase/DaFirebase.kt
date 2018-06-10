@@ -11,11 +11,6 @@ import com.hackathon.a3davinci.model.ResponseGame
 import com.hackathon.a3davinci.model.ResponseUser
 
 
-
-
-
-
-
 class DaFirebase {
 
     var database = FirebaseDatabase.getInstance()
@@ -25,9 +20,9 @@ class DaFirebase {
 
 
     fun createUser(user: User) {
-            val key = usersRef.push().key
-            user.uuid = key!!
-            usersRef.child(key).setValue(user)
+        val key = usersRef.push().key
+        user.uuid = key!!
+        usersRef.child(key).setValue(user)
     }
 
     fun createGame(game: Game) {
@@ -40,7 +35,7 @@ class DaFirebase {
         var user = User()
         var game = Game()
         var mapGame = hashMapOf<String, Any>()
-        Log.e(  "REFERECE",      usersRef.child(userId).child("name").toString())
+        Log.e("REFERECE", usersRef.child(userId).child("name").toString())
         usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val resUser = ResponseUser(snapshot.value as HashMap<String, Any>)
@@ -50,7 +45,7 @@ class DaFirebase {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val resGame = ResponseGame(snapshot.value as HashMap<String, Any>)
                         game = resGame.toGame()
-                        Log.e("SNAPSHOT",snapshot.toString())
+                        Log.e("SNAPSHOT", snapshot.toString())
                         mapGame = snapshot.value as HashMap<String, Any>
                         Log.e("MAP1", mapGame.toString())
                         Log.e("MAP2", mapGame.toString())
@@ -65,15 +60,16 @@ class DaFirebase {
                     }
                 })
             }
+
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    fun putPic(gameId: String,pic: String) {
+    fun putPic(gameId: String, pic: String) {
         var mapGame = hashMapOf<String, Any>()
         gamesRef.child(gameId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.e("SNAPSHOT",snapshot.toString())
+                Log.e("SNAPSHOT", snapshot.toString())
                 mapGame = snapshot.value as HashMap<String, Any>
                 Log.e("MAP1", mapGame.toString())
                 Log.e("MAP2", mapGame.toString())
@@ -86,6 +82,7 @@ class DaFirebase {
             }
         })
     }
+
     fun getGameListener(): ValueEventListener {
         var gameListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
