@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -35,6 +34,15 @@ class MainActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
             sendPoints(points)
         }
+
+        val points = mutableListOf<Pair<Float, Float>>()
+
+//        for (i in 0..500 step 10) {
+//            points.add(i.toFloat() to i.toFloat())
+//        }
+
+        val pictureDrawer = PictureDrawer(this, points)
+        setContentView(pictureDrawer)
     }
 
 }
