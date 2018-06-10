@@ -2,7 +2,6 @@ package com.hackathon.a3davinci
 
 import android.content.Context
 import android.hardware.Sensor
-import android.hardware.Sensor.TYPE_GYROSCOPE
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
@@ -13,48 +12,43 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-class SensorFragment : Fragment(), SensorEventListener {
+class SensorFragment(val mContext: Context) : SensorEventListener {
     private var mSensorManager: SensorManager? = null
     private var mAccelerometer: Sensor? = null
     val points = mutableListOf<Pair<Float, Float>>()
+    var isActive = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mSensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+    init {
+        mSensorManager = mContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
     }
+
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
         // Do something here if sensor accuracy changes.
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-
-        val coordinates = event.values
-        if (points.isNotEmpty()) {
-            val last: Pair<Float, Float> = points.last()
-            points.add((last.first + coordinates[0]) to (last.second + coordinates[1]))
-        } else {
-            points.add(coordinates[0] to coordinates[1])
+        Log.e("sensor", "TRIGGERED")
+        if (isActive) {
+            val coordinates = event.values
+            if (points.isNotEmpty()) {
+                val last: Pair<Float, Float> = points.last()
+                points.add((last.first + coordinates[3]) to (last.second + coordinates[1]))
+            } else {
+                points.add(coordinates[3] to coordinates[1])
+            }
+//            Log.e("${event.sensor.type} sensors", points.toString())
         }
-        //    Log.e("${event.sensor.type} sensors", coordinates.joinToString(", "))
     }
 
-    override fun onResume() {
-        super.onResume()
-        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mSensorManager?.unregisterListener(this)
-        //  sendPoints(points)
+    fun sendAndClear() {
+        sendPoints(points)
         points.clear()
     }
-
-
 }
-
 
 fun sendPoints(points: List<Pair<Float, Float>>) {
     val flattenPoints: List<Float> = points.flatMap { it.toList() }
