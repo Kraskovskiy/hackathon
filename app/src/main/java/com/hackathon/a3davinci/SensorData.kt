@@ -40,8 +40,13 @@ class SensorFragment(val mContext: Context) : SensorEventListener {
             } else {
                 points.add(coordinates[0] to coordinates[1])
             }
-            Log.e("${event.sensor.type} sensors", points.last().toString())
+            Log.e("${event.sensor.type} sensors", points.toString())
         }
+    }
+
+    fun sendAndClear() {
+        sendPoints(points)
+        points.clear()
     }
 
 //    override fun onResume() {
