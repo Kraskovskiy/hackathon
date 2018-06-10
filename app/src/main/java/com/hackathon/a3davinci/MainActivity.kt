@@ -25,9 +25,15 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .add(R.id.container, fragment).commit()
 
+        val points = mutableListOf<Pair<Float, Float>>()
+        for (i in 0..100){
+            points.add(i.toFloat() to i.toFloat())
+        }
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+            sendPoints(points)
         }
     }
 
