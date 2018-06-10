@@ -43,12 +43,14 @@ class MatchmakingFragment : Fragment() {
        val view: View = inflater.inflate(R.layout.fragment_matchmaking, container, false)
 
 
-        val isHost = this.arguments?.getBoolean(ARG_MATCHMAKING_ISHOST)
-        initView(isHost)
-
         return view
 
         }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val isHost = this.arguments?.getBoolean(ARG_MATCHMAKING_ISHOST)
+        initView(isHost)
+    }
 
 
 
