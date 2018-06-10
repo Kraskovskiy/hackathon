@@ -12,24 +12,26 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-class SensorFragment : Fragment(), SensorEventListener {
+class SensorFragment(val mContext: Context) : SensorEventListener {
     private var mSensorManager: SensorManager? = null
     private var mAccelerometer: Sensor? = null
     val points = mutableListOf<Pair<Float, Float>>()
     var isActive = false
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mSensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    init {
+        mSensorManager = mContext.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         mAccelerometer = mSensorManager!!.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
     }
+
 
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
         // Do something here if sensor accuracy changes.
     }
 
     override fun onSensorChanged(event: SensorEvent) {
+        Log.e("sensor", "TRIGGERED")
         if (isActive) {
             val coordinates = event.values
             if (points.isNotEmpty()) {
@@ -38,29 +40,24 @@ class SensorFragment : Fragment(), SensorEventListener {
             } else {
                 points.add(coordinates[0] to coordinates[1])
             }
-            Log.e("${event.sensor.type} sensors", coordinates.joinToString(", "))
+            Log.e("${event.sensor.type} sensors", points.last().toString())
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        mSensorManager?.unregisterListener(this)
-        //  sendPoints(points)
-        points.clear()
-    }
+//    override fun onResume() {
+//        super.onResume()
+//        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        mSensorManager?.unregisterListener(this)
+//        //  sendPoints(points)
+//        points.clear()
+//    }
 
 
 }
-
-data class CoordinatesHolder(
-        val points: Array<Float>
-)
-
 
 fun sendPoints(points: List<Pair<Float, Float>>) {
     val flattenPoints: List<Float> = points.flatMap { it.toList() }
