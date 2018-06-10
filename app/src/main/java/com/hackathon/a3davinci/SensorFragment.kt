@@ -2,7 +2,6 @@ package com.hackathon.a3davinci
 
 import android.content.Context
 import android.hardware.Sensor
-import android.hardware.Sensor.TYPE_GYROSCOPE
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
@@ -17,6 +16,8 @@ class SensorFragment : Fragment(), SensorEventListener {
     private var mSensorManager: SensorManager? = null
     private var mAccelerometer: Sensor? = null
     val points = mutableListOf<Pair<Float, Float>>()
+    var isActive = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +30,16 @@ class SensorFragment : Fragment(), SensorEventListener {
     }
 
     override fun onSensorChanged(event: SensorEvent) {
-
-        val coordinates = event.values
-        if (points.isNotEmpty()) {
-            val last: Pair<Float, Float> = points.last()
-            points.add((last.first + coordinates[0]) to (last.second + coordinates[1]))
-        } else {
-            points.add(coordinates[0] to coordinates[1])
+        if (isActive) {
+            val coordinates = event.values
+            if (points.isNotEmpty()) {
+                val last: Pair<Float, Float> = points.last()
+                points.add((last.first + coordinates[0]) to (last.second + coordinates[1]))
+            } else {
+                points.add(coordinates[0] to coordinates[1])
+            }
+            Log.e("${event.sensor.type} sensors", coordinates.joinToString(", "))
         }
-        //    Log.e("${event.sensor.type} sensors", coordinates.joinToString(", "))
     }
 
     override fun onResume() {
