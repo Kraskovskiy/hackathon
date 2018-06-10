@@ -7,4 +7,5 @@
     <string name="start_game">Start game</string>
     <string name="hold_to_draw">Hold to draw!</string>
     <string name="wait">Wait!</string>
+    <string name="connect">Connect</string>
 </resources>
