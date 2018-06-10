@@ -57,6 +57,7 @@ class DaFirebase {
                 mapGame = snapshot.value as HashMap<String, Any>
                 Log.e("MAP1", mapGame.toString())
 
+
             }
 
             override fun onCancelled(p0: DatabaseError) {
