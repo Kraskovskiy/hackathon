@@ -46,44 +46,57 @@ class DaFirebase {
                 val resUser = ResponseUser(snapshot.value as HashMap<String, Any>)
                 user = resUser.toUser()
                 Log.e("user", "${user}")
+                gamesRef.child(gameId).addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val resGame = ResponseGame(snapshot.value as HashMap<String, Any>)
+                        game = resGame.toGame()
+                        Log.e("SNAPSHOT",snapshot.toString())
+                        mapGame = snapshot.value as HashMap<String, Any>
+                        Log.e("MAP1", mapGame.toString())
+                        Log.e("MAP2", mapGame.toString())
+                        val listOfPlayers: MutableList<User> = mapGame.get("players") as MutableList<User>
+                        listOfPlayers.add(user)
+                        mapGame.set("players", listOfPlayers)
+                        gamesRef.child(gameId).updateChildren(mapGame)
+                    }
+
+                    override fun onCancelled(p0: DatabaseError) {
+
+                    }
+                })
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-        gamesRef.child(gameId).addValueEventListener(object : ValueEventListener {
+    }
+
+    fun putPic(gameId: String,pic: String) {
+        var mapGame = hashMapOf<String, Any>()
+        gamesRef.child(gameId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val resGame = ResponseGame(snapshot.value as HashMap<String, Any>)
-                game = resGame.toGame()
                 Log.e("SNAPSHOT",snapshot.toString())
                 mapGame = snapshot.value as HashMap<String, Any>
                 Log.e("MAP1", mapGame.toString())
-
-
+                Log.e("MAP2", mapGame.toString())
+                mapGame.set("pic", pic)
+                gamesRef.child(gameId).updateChildren(mapGame)
             }
 
             override fun onCancelled(p0: DatabaseError) {
 
             }
         })
+    }
+    fun getGameListener(): ValueEventListener {
+        var gameListener: ValueEventListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val game = dataSnapshot.getValue<Game>(Game::class.java!!)
+            }
 
-//        val phoneQuery = gamesRef.equalTo(gameId)
-//        phoneQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                for (singleSnapshot in dataSnapshot.children) {
-//                    game = singleSnapshot.getValue(Game::class.java)!!
-//                    Log.e("GAME", game.toString())
-//                }
-//            }
-//
-//            override fun onCancelled(databaseError: DatabaseError) {
-//                Log.e("cancel", "onCancelled", databaseError.toException())
-//            }
-//        })
-
-        Log.e("MAP2", mapGame.toString())
-        val listOfPlayers: MutableList<User> = mapGame.get("players") as MutableList<User>
-        listOfPlayers.add(user)
-        mapGame.set("players", listOfPlayers)
-        gamesRef.updateChildren(mapGame)
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("canceled", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        return gameListener
     }
 }
 
