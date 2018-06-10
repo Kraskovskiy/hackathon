@@ -29,18 +29,14 @@ class MatchmakingFragment : Fragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+       val view: View = inflater.inflate(R.layout.fragment_matchmaking, container, false)
 
         playerCounterTextView = view?.findViewById(R.id.player_counter)
         joinCodeTextView = view?.findViewById(R.id.join_code)
         enterCodeEditText = view?.findViewById(R.id.enter_code)
         enterNameEditText = view?.findViewById(R.id.enter_name)
         startConnectButton = view?.findViewById(R.id.button_start_connect_game)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-       val view: View = inflater.inflate(R.layout.fragment_matchmaking, container, false)
 
 
         return view
@@ -51,10 +47,6 @@ class MatchmakingFragment : Fragment() {
         val isHost = this.arguments?.getBoolean(ARG_MATCHMAKING_ISHOST)
         initView(isHost)
     }
-
-
-
-
 
 
 

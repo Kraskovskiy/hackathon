@@ -19,12 +19,12 @@ class MainFragment : Fragment() {
         val buttonNew : Button = view.findViewById(R.id.button_new)
         buttonNew?.setOnClickListener({ _ ->
             activity?.supportFragmentManager?.beginTransaction()?. add(R.id.container, MatchmakingFragment
-                        .newInstance(true))?.commit()  })
+                        .newInstance(true))?.addToBackStack(null)?.commit()  })
         val buttonJoin = view.findViewById<Button>(R.id.button_join)
         buttonJoin.setOnClickListener({_ ->
             activity?.supportFragmentManager?.beginTransaction()?.
                 add(R.id.container, MatchmakingFragment
-                        .newInstance(false))?.commit()  })
+                        .newInstance(false))?.addToBackStack(null)?.commit()  })
     }
 
 
