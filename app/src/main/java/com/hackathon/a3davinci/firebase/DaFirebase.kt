@@ -11,12 +11,18 @@ import com.hackathon.a3davinci.model.ResponseGame
 import com.hackathon.a3davinci.model.ResponseUser
 
 
+
+
+
+
+
 class DaFirebase {
 
     var database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
     var gamesRef = database.getReference("games")
     var wordsRef = database.getReference("words")
+
 
     fun createUser(user: User) {
             val key = usersRef.push().key
@@ -34,11 +40,12 @@ class DaFirebase {
         var user = User()
         var game = Game()
         var mapGame = hashMapOf<String, Any>()
-        usersRef.child(userId).addValueEventListener(object : ValueEventListener {
+        Log.e(  "REFERECE",      usersRef.child(userId).child("name").toString())
+        usersRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val resUser = ResponseUser(snapshot.value as HashMap<String, Any>)
                 user = resUser.toUser()
-                Log.i("user", "${user}")
+                Log.e("user", "${user}")
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
@@ -56,6 +63,21 @@ class DaFirebase {
 
             }
         })
+
+//        val phoneQuery = gamesRef.equalTo(gameId)
+//        phoneQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                for (singleSnapshot in dataSnapshot.children) {
+//                    game = singleSnapshot.getValue(Game::class.java)!!
+//                    Log.e("GAME", game.toString())
+//                }
+//            }
+//
+//            override fun onCancelled(databaseError: DatabaseError) {
+//                Log.e("cancel", "onCancelled", databaseError.toException())
+//            }
+//        })
+
         Log.e("MAP2", mapGame.toString())
         val listOfPlayers: MutableList<User> = mapGame.get("players") as MutableList<User>
         listOfPlayers.add(user)
