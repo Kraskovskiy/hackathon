@@ -55,10 +55,6 @@ class SensorFragment : Fragment(), SensorEventListener {
 
 }
 
-data class CoordinatesHolder(
-        val points: Array<Float>
-)
-
 
 fun sendPoints(points: List<Pair<Float, Float>>) {
     val flattenPoints: List<Float> = points.flatMap { it.toList() }
