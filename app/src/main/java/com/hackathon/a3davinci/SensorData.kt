@@ -36,9 +36,9 @@ class SensorFragment(val mContext: Context) : SensorEventListener {
             val coordinates = event.values
             if (points.isNotEmpty()) {
                 val last: Pair<Float, Float> = points.last()
-                points.add((last.first + coordinates[0]) to (last.second + coordinates[1]))
+                points.add((last.first + coordinates[3]) to (last.second + coordinates[2]))
             } else {
-                points.add(coordinates[0] to coordinates[1])
+                points.add(coordinates[3] to coordinates[2])
             }
             Log.e("${event.sensor.type} sensors", points.toString())
         }
@@ -48,20 +48,6 @@ class SensorFragment(val mContext: Context) : SensorEventListener {
         sendPoints(points)
         points.clear()
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        mSensorManager?.unregisterListener(this)
-//        //  sendPoints(points)
-//        points.clear()
-//    }
-
-
 }
 
 fun sendPoints(points: List<Pair<Float, Float>>) {
