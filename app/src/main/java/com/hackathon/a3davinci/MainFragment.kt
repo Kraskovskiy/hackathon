@@ -18,12 +18,12 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val buttonNew : Button = view.findViewById(R.id.button_new)
         buttonNew?.setOnClickListener({ _ ->
-            activity?.supportFragmentManager?.beginTransaction()?. add(R.id.container, MatchmakingFragment
+            activity?.supportFragmentManager?.beginTransaction()?. replace(R.id.container, MatchmakingFragment
                         .newInstance(true))?.addToBackStack(null)?.commit()  })
         val buttonJoin = view.findViewById<Button>(R.id.button_join)
         buttonJoin.setOnClickListener({_ ->
             activity?.supportFragmentManager?.beginTransaction()?.
-                add(R.id.container, MatchmakingFragment
+                replace(R.id.container, MatchmakingFragment
                         .newInstance(false))?.addToBackStack(null)?.commit()  })
     }
 
