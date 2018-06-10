@@ -4,7 +4,7 @@ import android.R.attr.author
 
 
 
-data class Game(var players: MutableList<User> = mutableListOf(), var uuid: String = "", var pic: String = "") {
+data class Game(var players: MutableList<User> = mutableListOf(), var uuid: String = "", var pic: String = "", var started: Boolean = false) {
 //    fun toMap(): Map<String, Any> {
 //        val result = HashMap()
 //        result.put("uuid", uid)
