@@ -20,9 +20,15 @@ class DaFirebase {
 
 
     fun createUser(user: User) {
-        val key = usersRef.push().key
-        user.uuid = key!!
-        usersRef.child(key).setValue(user)
+        usersRef.child(user.uuid).setValue(user)
+    }
+
+    fun generateUserUUID(): String {
+        return usersRef.push().key!!
+    }
+
+    fun generateGameUIUD(): String {
+        return gamesRef.push().key!!
     }
 
     fun createGame(game: Game) {
@@ -87,6 +93,7 @@ class DaFirebase {
         var gameListener: ValueEventListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val game = dataSnapshot.getValue<Game>(Game::class.java!!)
+                Log.i("GAME", "$game")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {

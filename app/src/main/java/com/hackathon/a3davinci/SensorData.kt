@@ -2,6 +2,7 @@ package com.hackathon.a3davinci
 
 import android.content.Context
 import android.hardware.Sensor
+import android.hardware.Sensor.TYPE_GYROSCOPE
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
@@ -25,7 +26,6 @@ class SensorFragment(val mContext: Context) : SensorEventListener {
         mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
-
     override fun onAccuracyChanged(sensor: Sensor, accuracy: Int) {
         // Do something here if sensor accuracy changes.
     }
@@ -36,11 +36,11 @@ class SensorFragment(val mContext: Context) : SensorEventListener {
             val coordinates = event.values
             if (points.isNotEmpty()) {
                 val last: Pair<Float, Float> = points.last()
-                points.add((last.first + coordinates[0]) to (last.second + coordinates[1]))
+                points.add((last.first - coordinates[2]) to (last.second + coordinates[0]))
             } else {
-                points.add(coordinates[0] to coordinates[1])
+                points.add(-coordinates[2] to coordinates[0])
             }
-            Log.e("${event.sensor.type} sensors", points.toString())
+//            Log.e("${event.sensor.type} sensors", points.toString())
         }
     }
 
@@ -48,29 +48,12 @@ class SensorFragment(val mContext: Context) : SensorEventListener {
         sendPoints(points)
         points.clear()
     }
-
-//    override fun onResume() {
-//        super.onResume()
-//        mSensorManager!!.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL)
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        mSensorManager?.unregisterListener(this)
-//        //  sendPoints(points)
-//        points.clear()
-//    }
-
-
 }
 
 fun sendPoints(points: List<Pair<Float, Float>>) {
     val flattenPoints: List<Float> = points.flatMap { it.toList() }
     val gson = Gson()
     val serializedPoints = gson.toJson(flattenPoints)
-
-    Log.e("sendPoint", serializedPoints)
-    Log.e("sendPoint", retrievePoints(serializedPoints).toString())
 }
 
 fun retrievePoints(p: String): List<Pair<Float, Float>> {

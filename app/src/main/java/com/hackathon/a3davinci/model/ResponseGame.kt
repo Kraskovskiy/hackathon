@@ -7,7 +7,7 @@ data class ResponseGame(val response: HashMap<String, Any>) {
         for(item in response.entries){
             if (item.key == "players") {
                 game.players = item.value as MutableList<User>
-            } else {
+            } else if (item.key == "uuid") {
                 game.uuid = item.value as String
             }
         }
