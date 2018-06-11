@@ -50,11 +50,11 @@ class MatchmakingFragment : Fragment() {
             val firebase = DaFirebase()
             when(isHost) {
                 true -> {
-                    val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID())
+                    val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID(), true)
                     val game = Game(mutableListOf(user), firebase.generateGameUIUD())
                     firebase.createGame(game)
                     firebase.createUser(user)
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment().newInstance(game.uuid)
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment().newInstance(game.uuid, user.uuid)
                     )?.addToBackStack(null)?.commit()
                 }
 
@@ -62,7 +62,7 @@ class MatchmakingFragment : Fragment() {
                     val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID())
                     firebase.createUser(user)
                     firebase.addPlayer(enterCodeEditText?.text.toString(), user.uuid)
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment().newInstance(enterCodeEditText?.text.toString())
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment().newInstance(enterCodeEditText?.text.toString(), user.uuid)
                     )?.addToBackStack(null)?.commit()
                 }
             }
