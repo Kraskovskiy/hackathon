@@ -5,6 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.hackathon.a3davinci.PictureDrawer
+        android:id="@+id/surf"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
 
     <TextView
         android:id="@+id/word"

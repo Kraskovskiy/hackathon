@@ -3,11 +3,9 @@ package com.hackathon.a3davinci
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.AttributeSet
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,6 +15,7 @@ import android.widget.Button
 
 class DrawFragment : Fragment() {
 
+    var drawer: PictureDrawer? = null
     fun newInstance(gameId: String, userId: String) : DrawFragment {
         val args : Bundle = Bundle()
         val fragment = DrawFragment()
@@ -37,6 +36,7 @@ class DrawFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val sensorFragment = SensorFragment(this.context!!) // TODO
         buttonHold = view.findViewById(R.id.button_hold)
+        drawer = view.findViewById(R.id.surf)
         buttonHold?.let { button ->
             button.setOnTouchListener(DrawTouchListener(sensorFragment, this.context!!))
         }
@@ -55,7 +55,7 @@ class DrawFragment : Fragment() {
             }
         })
     }
-        class DrawTouchListener(val sensorFragment: SensorFragment, val context: Context) : View.OnTouchListener {
+        inner class DrawTouchListener(val sensorFragment: SensorFragment, val context: Context) : View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
             event?.let {
                 when (event.getAction()) {
@@ -67,8 +67,11 @@ class DrawFragment : Fragment() {
                     }
                     MotionEvent.ACTION_UP -> {
                         sensorFragment.isActive = false
-                        var draw = PictureDrawer(context, sensorFragment.points)
+                        this@DrawFragment.drawer?.setData(sensorFragment.points)
+//                        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, GuessFragment().newInstance(arguments?.getString(GuessFragment.ARG_GUESS_GAME_ID)!!, arguments?.getString(GuessFragment.ARG_GUESS_USER_ID)!!))?.
+//                                addToBackStack(null)?.commit()
                     }
+                    else -> {}
                 }
             }
             return true
