@@ -56,6 +56,12 @@ fun sendPoints(points: List<Pair<Float, Float>>) {
     val serializedPoints = gson.toJson(flattenPoints)
 }
 
+fun sendPointsToJson(points: List<Pair<Float, Float>>) : String{
+    val flattenPoints: List<Float> = points.flatMap { it.toList() }
+    val gson = Gson()
+    return gson.toJson(flattenPoints)
+}
+
 fun retrievePoints(p: String): List<Pair<Float, Float>> {
     val points: List<Float> = Gson()
             .fromJson(p, object : TypeToken<List<Float>>() {}.type)

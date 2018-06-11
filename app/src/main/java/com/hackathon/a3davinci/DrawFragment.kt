@@ -67,7 +67,10 @@ class DrawFragment : Fragment() {
                     }
                     MotionEvent.ACTION_UP -> {
                         sensorFragment.isActive = false
+                        val firebase = DaFirebase()
+                        firebase.gamesRef.child(arguments!!.getString(GuessFragment.ARG_GUESS_GAME_ID)).child("pic").setValue(sendPointsToJson(sensorFragment.points))
                         this@DrawFragment.drawer?.setData(sensorFragment.points)
+
 //                        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, GuessFragment().newInstance(arguments?.getString(GuessFragment.ARG_GUESS_GAME_ID)!!, arguments?.getString(GuessFragment.ARG_GUESS_USER_ID)!!))?.
 //                                addToBackStack(null)?.commit()
                     }

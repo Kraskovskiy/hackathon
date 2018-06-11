@@ -2,6 +2,7 @@ package com.hackathon.a3davinci
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.SurfaceView
 import android.view.View
@@ -9,6 +10,10 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.hackathon.a3davinci.firebase.DaFirebase
 import java.util.*
 
 class GuessFragment : Fragment() {
@@ -28,7 +33,7 @@ class GuessFragment : Fragment() {
 
     private var canonManTextView: TextView? = null
     private var timer: TextView? = null
-    private var image: SurfaceView? = null
+    private var image: PictureDrawer? = null
     private var answerEditText: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,7 +51,21 @@ class GuessFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val firebase = DaFirebase()
+        firebase.gamesRef.child(arguments!!.getString(ARG_GUESS_GAME_ID)).child("pic").addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
 
+                val pic = snapshot.value as String
+                Log.i("DATA P", "$pic")
+                val points = retrievePoints(pic)
+                image?.setData(points)
+                Log.i("POINTS", "$points")
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
     }
 
 
