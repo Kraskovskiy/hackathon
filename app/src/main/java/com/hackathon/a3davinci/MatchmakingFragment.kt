@@ -35,8 +35,7 @@ class MatchmakingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_matchmaking, container, false)
 
-        playerCounterTextView = view?.findViewById(R.id.player_counter)
-        joinCodeTextView = view?.findViewById(R.id.join_code)
+
         enterCodeEditText = view?.findViewById(R.id.enter_code)
         enterNameEditText = view?.findViewById(R.id.enter_name)
         startConnectButton = view?.findViewById(R.id.button_start_connect_game)
@@ -55,7 +54,7 @@ class MatchmakingFragment : Fragment() {
                     val game = Game(mutableListOf(user), firebase.generateGameUIUD())
                     firebase.createGame(game)
                     firebase.createUser(user)
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment()
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment().newInstance(game.uuid)
                     )?.addToBackStack(null)?.commit()
                 }
 
@@ -63,7 +62,7 @@ class MatchmakingFragment : Fragment() {
                     val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID())
                     firebase.createUser(user)
                     firebase.addPlayer(enterCodeEditText?.text.toString(), user.uuid)
-                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment()
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment().newInstance(enterCodeEditText?.text.toString())
                     )?.addToBackStack(null)?.commit()
                 }
             }

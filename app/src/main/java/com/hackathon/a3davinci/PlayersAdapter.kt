@@ -11,13 +11,13 @@ import com.hackathon.a3davinci.model.User
 
 class PlayersAdapter(val context : Context? ) : RecyclerView.Adapter<ViewHolder>() {
 
-    var items: MutableList<User> = mutableListOf()
+    var items: MutableList<HashMap<String, Any>> = mutableListOf()
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.playerNameTextView.text = items[position].name
+        holder?.playerNameTextView.text = items[position].get("name") as String
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
