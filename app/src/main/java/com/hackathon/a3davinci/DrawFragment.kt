@@ -16,6 +16,15 @@ import android.widget.Button
 
 class DrawFragment : Fragment() {
 
+    fun newInstance(gameId: String, userId: String) : DrawFragment {
+        val args : Bundle = Bundle()
+        val fragment = DrawFragment()
+        args.putString(GuessFragment.ARG_GUESS_GAME_ID, gameId)
+        args.putString(GuessFragment.ARG_GUESS_USER_ID, userId)
+        fragment.arguments = args
+        return fragment
+    }
+
     var buttonHold: Button? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_draw, container, false)
@@ -32,7 +41,7 @@ class DrawFragment : Fragment() {
         }
         val text: TextView = view.findViewById(R.id.word)
         val firebase = DaFirebase()
-        firebase.wordsRef.addListenerForSingleValueEvent(object :ValueEventListener {
+        firebase.wordsRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val mapWord: ArrayList<String> = snapshot.value as ArrayList<String>
                 val index = (Math.random() * mapWord.size).toInt()
@@ -45,23 +54,24 @@ class DrawFragment : Fragment() {
             }
         })
 
-}
+    }
 
-class DrawTouchListener(val sensorFragment: SensorFragment) : View.OnTouchListener {
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-        event?.let {
-            when (event.getAction()) {
-                MotionEvent.ACTION_DOWN -> {
-                    sensorFragment.isActive = true
-                }
-                MotionEvent.ACTION_MOVE -> {
-                    sensorFragment.isActive = true
-                }
-                MotionEvent.ACTION_UP -> {
-                    sensorFragment.isActive = false
+    class DrawTouchListener(val sensorFragment: SensorFragment) : View.OnTouchListener {
+        override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+            event?.let {
+                when (event.getAction()) {
+                    MotionEvent.ACTION_DOWN -> {
+                        sensorFragment.isActive = true
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        sensorFragment.isActive = true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        sensorFragment.isActive = false
+                    }
                 }
             }
+            return true
         }
-        return true
     }
 }
