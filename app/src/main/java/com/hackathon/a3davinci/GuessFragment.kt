@@ -16,8 +16,8 @@ class GuessFragment : Fragment() {
         const val ARG_GUESS_USER_ID = "arg_guess_user_id"
     }
 
-    fun newInstance(gameId: String, userId: String) : GuessFragment {
-        val args : Bundle = Bundle()
+    fun newInstance(gameId: String, userId: String): GuessFragment {
+        val args: Bundle = Bundle()
         val fragment = GuessFragment()
         args.putString(ARG_GUESS_GAME_ID, gameId)
         args.putString(ARG_GUESS_USER_ID, userId)
@@ -53,16 +53,18 @@ class GuessFragment : Fragment() {
         TODO()
     }
 
-    private fun startTimer(gameId : String?, userId : String?) {
+    private fun startTimer(gameId: String?, userId: String?) {
         var tm: Long = 30
         kotlin.concurrent.timer("timer", true, 0, 1000, {
             tm--
-            timer?.text = tm.toString()
-            if(tm == 0.toLong()) { goToResult(gameId, userId)}
+            activity?.runOnUiThread({ timer?.text = tm.toString() })
+            if (tm == 0.toLong()) {
+                goToResult(gameId, userId)
+            }
         })
     }
 
-    private fun goToResult(gameId : String?, userId : String?) {
+    private fun goToResult(gameId: String?, userId: String?) {
         activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, ResultFragment().newInstance(gameId, userId))?.
                 addToBackStack(null)?.commit()
     }
