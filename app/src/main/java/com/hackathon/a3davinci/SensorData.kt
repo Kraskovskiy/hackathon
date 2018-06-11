@@ -40,7 +40,7 @@ class SensorFragment(val mContext: Context) : SensorEventListener {
             } else {
                 points.add(-coordinates[2] to coordinates[0])
             }
-//            Log.e("${event.sensor.type} sensors", points.toString())
+            Log.e("${event.sensor.type} sensors", points.toString())
         }
     }
 
@@ -61,3 +61,4 @@ fun retrievePoints(p: String): List<Pair<Float, Float>> {
             .fromJson(p, object : TypeToken<List<Float>>() {}.type)
     return points.chunked(2).map { it[0] to it[1] }
 }
+

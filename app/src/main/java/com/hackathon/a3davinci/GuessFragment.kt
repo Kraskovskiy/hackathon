@@ -3,6 +3,7 @@ package com.hackathon.a3davinci
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
+import android.view.SurfaceView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
@@ -27,7 +28,7 @@ class GuessFragment : Fragment() {
 
     private var canonManTextView: TextView? = null
     private var timer: TextView? = null
-    private var image: ImageView? = null
+    private var image: SurfaceView? = null
     private var answerEditText: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
