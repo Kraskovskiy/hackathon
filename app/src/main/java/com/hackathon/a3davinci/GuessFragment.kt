@@ -8,16 +8,16 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import rjsv.circularview.CircleView
+import java.util.*
 
 class GuessFragment : Fragment() {
-    private var canonManTextView : TextView? = null
-    private var timer : CircleView? = null
-    private var image : ImageView? = null
-    private var answerEditText : EditText? =null
+    private var canonManTextView: TextView? = null
+    private var timer: TextView? = null
+    private var image: ImageView? = null
+    private var answerEditText: EditText? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view : View = inflater.inflate(R.layout.fragment_guess, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_guess, container, false)
         canonManTextView = view.findViewById(R.id.canon_man)
         timer = view.findViewById(R.id.timer)
         image = view.findViewById(R.id.image)
@@ -26,12 +26,20 @@ class GuessFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        startTimer()
 
     }
 
 
-
-    fun checkAnswer(answer : String) {
+    fun checkAnswer(answer: String) {
         TODO()
+    }
+
+    private fun startTimer() {
+        var tm: Long = 30
+        kotlin.concurrent.timer("timer", true, 0, 1000, {
+            tm--
+            timer?.text = tm.toString()
+        })
     }
 }

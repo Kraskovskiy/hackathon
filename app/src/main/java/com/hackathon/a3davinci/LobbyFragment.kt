@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import com.google.android.gms.common.util.CollectionUtils.mutableListOf
 
 class LobbyFragment : Fragment() {
     companion object {
