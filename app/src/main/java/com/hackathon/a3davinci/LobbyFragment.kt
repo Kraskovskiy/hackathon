@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.hackathon.a3davinci.firebase.DaFirebase
+import com.hackathon.a3davinci.model.ResponseUser
 import com.hackathon.a3davinci.model.User
 import java.util.Collections.addAll
 
@@ -30,12 +31,15 @@ class LobbyFragment : Fragment() {
         firebase.gamesRef.child("-LEfeuUfa_xyfd_jvqP-").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val mapGame = snapshot.value as HashMap<String, Any>
-                val players = mapGame["players"] as MutableList<User>
+                Log.i("DATA FOR RECYCLER VIEW", "$mapGame")
+                val players: MutableList<User> = mapGame.get("players") as MutableList<User>
+                Log.i("DATA FOR RECYCLER VIEW Players", "$players")
+
                 val adapter = recyclerView.adapter as PlayersAdapter
-                adapter.items.toMutableList().apply {
+                adapter.items = adapter.items.toMutableList().apply {
                     addAll(players)
                 }
-                recyclerView.adapter.notifyDataSetChanged()
+                adapter.notifyDataSetChanged()
             }
 
             override fun onCancelled(p0: DatabaseError) {
