@@ -7,23 +7,43 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.hackathon.a3davinci.firebase.DaFirebase
 import android.widget.Button
 
 class DrawFragment : Fragment() {
 
     var buttonHold: Button? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_draw, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_draw, container, false)
+        return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val sensorFragment = SensorFragment(this.context!!) // TODO
         buttonHold = view.findViewById(R.id.button_hold)
         buttonHold?.let { button ->
             button.setOnTouchListener(DrawTouchListener(sensorFragment))
         }
-    }
+        val text: TextView = view.findViewById(R.id.word)
+        val firebase = DaFirebase()
+        firebase.wordsRef.addListenerForSingleValueEvent(object :ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val mapWord: ArrayList<String> = snapshot.value as ArrayList<String>
+                val index = (Math.random() * mapWord.size).toInt()
+                text.text = mapWord.get(index)
 
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
 
 }
 
@@ -44,5 +64,4 @@ class DrawTouchListener(val sensorFragment: SensorFragment) : View.OnTouchListen
         }
         return true
     }
-
 }
