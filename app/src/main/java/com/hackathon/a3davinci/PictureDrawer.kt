@@ -34,7 +34,6 @@ class DrawThread(private val points: List<Pair<Float, Float>>, private val surfa
         if (minX == null || minX > 0f) minX = 0f
         if (minY == null || minY > 0f) minY = 0f
 
-//        return points.map { it.second - minY to it.first - minX }
         return points.map { it.first - minX to it.second - minY }
     }
 
