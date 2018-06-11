@@ -11,7 +11,7 @@ import com.hackathon.a3davinci.model.User
 
 class PlayersAdapter(val context : Context? ) : RecyclerView.Adapter<ViewHolder>() {
 
-    var items: List<User> = emptyList()
+    var items: MutableList<User> = mutableListOf()
     override fun getItemCount(): Int {
         return items.size
     }

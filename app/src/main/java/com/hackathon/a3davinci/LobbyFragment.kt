@@ -32,12 +32,12 @@ class LobbyFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val mapGame = snapshot.value as HashMap<String, Any>
                 Log.i("DATA FOR RECYCLER VIEW", "$mapGame")
-                val players: MutableList<User> = mapGame.get("players") as MutableList<User>
+                val playersList: MutableList<User> = mutableListOf()
+                val players: HashMap<String, Any> = mapGame.get("players") as HashMap<String, Any>
                 Log.i("DATA FOR RECYCLER VIEW Players", "$players")
-
                 val adapter = recyclerView.adapter as PlayersAdapter
                 adapter.items = adapter.items.toMutableList().apply {
-                    addAll(players)
+                    addAll(playersList)
                 }
                 adapter.notifyDataSetChanged()
             }
