@@ -62,11 +62,12 @@ class LobbyFragment : Fragment() {
                 adapter.notifyDataSetChanged()
                 if (mapGame.get("started") == true) {
                     for (i in players) {
-                        if(self.arguments!!.getString(ARG_USER) == i.get("uuid") && i.get("drawing") == true) {
-                            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, DrawFragment()
+                        Log.i("INSIDE", "$i")
+                        if(self.arguments!!.getString(ARG_USER) == i.get("uuid") && i.get("drawer") == true) {
+                            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, DrawFragment().newInstance(self.arguments!!.getString(ARG_LOBBY_GAME_ID), self.arguments!!.getString(ARG_USER))
                             )?.addToBackStack(null)?.commit()
-                        } else if(self.arguments!!.getString(ARG_USER) == i.get("uuid") && i.get("drawing") == false) {
-                            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, GuessFragment()
+                        } else if(self.arguments!!.getString(ARG_USER) == i.get("uuid") && i.get("drawer") == false) {
+                            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, GuessFragment().newInstance(self.arguments!!.getString(ARG_LOBBY_GAME_ID),self.arguments!!.getString(ARG_USER))
                             )?.addToBackStack(null)?.commit()
                         }
 
