@@ -33,9 +33,9 @@ class SensorFragment : Fragment(), SensorEventListener {
         val coordinates = event.values
         if (points.isNotEmpty()) {
             val last: Pair<Float, Float> = points.last()
-            points.add((last.first + coordinates[0]) to (last.second + coordinates[1]))
+            points.add((last.first + -coordinates[3]) to (last.second + coordinates[1]))
         } else {
-            points.add(coordinates[0] to coordinates[1])
+            points.add(-coordinates[3] to coordinates[1])
         }
         //    Log.e("${event.sensor.type} sensors", coordinates.joinToString(", "))
     }
