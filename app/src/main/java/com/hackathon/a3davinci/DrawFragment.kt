@@ -1,5 +1,6 @@
 package com.hackathon.a3davinci
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -37,7 +38,7 @@ class DrawFragment : Fragment() {
         val sensorFragment = SensorFragment(this.context!!) // TODO
         buttonHold = view.findViewById(R.id.button_hold)
         buttonHold?.let { button ->
-            button.setOnTouchListener(DrawTouchListener(sensorFragment))
+            button.setOnTouchListener(DrawTouchListener(sensorFragment, this.context!!))
         }
         val text: TextView = view.findViewById(R.id.word)
         val firebase = DaFirebase()
@@ -53,10 +54,8 @@ class DrawFragment : Fragment() {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
-
     }
-
-    class DrawTouchListener(val sensorFragment: SensorFragment) : View.OnTouchListener {
+        class DrawTouchListener(val sensorFragment: SensorFragment, val context: Context) : View.OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
             event?.let {
                 when (event.getAction()) {
@@ -68,6 +67,7 @@ class DrawFragment : Fragment() {
                     }
                     MotionEvent.ACTION_UP -> {
                         sensorFragment.isActive = false
+                        var draw = PictureDrawer(context, sensorFragment.points)
                     }
                 }
             }
