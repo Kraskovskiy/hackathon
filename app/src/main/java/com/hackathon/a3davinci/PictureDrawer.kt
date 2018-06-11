@@ -25,6 +25,7 @@ class PictureDrawer(context: Context?, val points: List<Pair<Float, Float>>) :
         holder.addCallback(this)
     }
 
+
 }
 
 class DrawThread(private val points: List<Pair<Float, Float>>, private val surfaceHolder: SurfaceHolder) : Thread() {
