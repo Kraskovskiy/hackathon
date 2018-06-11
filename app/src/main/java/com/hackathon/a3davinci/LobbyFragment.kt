@@ -11,6 +11,16 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 
 class LobbyFragment : Fragment() {
+    companion object {
+        const val ARG_LOBBY_GAME_ID = "arg_lobby_game_id"
+    }
+    fun newInstance(gameId : String): LobbyFragment {
+        val args: Bundle = Bundle()
+        val fragment = LobbyFragment()
+        args.putString(ARG_LOBBY_GAME_ID, gameId)
+        fragment.arguments = args
+        return fragment
+    }
     private var recyclerView : RecyclerView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
