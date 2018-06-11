@@ -11,8 +11,10 @@ data class ResponseUser(val response: HashMap<String, Any>) {
                 user.score = item.value as Long
             } else if (item.key == "name") {
                 user.name = item.value as String
-            } else {
+            } else if (item.key == "uuid"){
                 user.uuid = item.value as String
+            } else if (item.key == "drawer") {
+                user.drawer = item.value as Boolean
             }
 
         }

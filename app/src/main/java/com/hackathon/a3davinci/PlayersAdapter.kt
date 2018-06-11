@@ -7,14 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.hackathon.a3davinci.model.User
 
-class PlayersAdapter(val items : MutableList<String>, val context : Context? ) : RecyclerView.Adapter<ViewHolder>() {
+class PlayersAdapter(val context : Context? ) : RecyclerView.Adapter<ViewHolder>() {
+
+    var items: List<User> = emptyList()
     override fun getItemCount(): Int {
         return items.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.playerNameTextView.text = items[position]
+        holder?.playerNameTextView.text = items[position].name
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

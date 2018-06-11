@@ -52,19 +52,19 @@ class MatchmakingFragment : Fragment() {
             when(isHost) {
                 true -> {
                     val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID())
-                    val game = Game(mutableListOf(user))
+                    val game = Game(mutableListOf(user), firebase.generateGameUIUD())
                     firebase.createGame(game)
                     firebase.createUser(user)
-//            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment
-//                    .newInstance(true))?.addToBackStack(null)?.commit()
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment()
+                    )?.addToBackStack(null)?.commit()
                 }
 
                 false -> {
                     val user = User(enterNameEditText?.text.toString(), -1, firebase.generateUserUUID())
                     firebase.createUser(user)
                     firebase.addPlayer(enterCodeEditText?.text.toString(), user.uuid)
-//            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment
-//                    .newInstance(true))?.addToBackStack(null)?.commit()
+                    activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.container, LobbyFragment()
+                    )?.addToBackStack(null)?.commit()
                 }
             }
 
